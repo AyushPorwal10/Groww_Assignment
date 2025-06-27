@@ -1,0 +1,37 @@
+package com.example.growwassignment.gainerloser.marketrepo
+
+import android.util.Log
+import com.example.growwassignment.gainerloser.marketdata.CompanyOverviewData
+import com.example.growwassignment.retrofit.StockMarketAPI
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
+import javax.inject.Inject
+
+class MarketRepository @Inject constructor(
+    private val marketAPI: StockMarketAPI
+) {
+    suspend fun fetchTopGainersLosers() = marketAPI.getTopGainersLosers()
+
+    suspend fun fetchCompanyOverview(companySymbol : String) : Response<CompanyOverviewData> {
+        return marketAPI.getCompanyOverview(symbol = companySymbol)
+    }
+
+    suspend fun getIntradayPrices(companySymbol: String) :Result<List<Pair<String, Float>>>{
+        return try{
+            val pricesResponse = marketAPI.getIntradayData(symbol = companySymbol)
+            if(pricesResponse.isSuccessful){
+                val body = pricesResponse.body()
+                val list = body?.timeSeries?.entries?.map {
+                    it.key to it.value.close.toFloat()
+                }?.sortedBy { it.first } ?: emptyList()
+                Result.success(list)
+            }
+            else {
+                Result.failure(Exception("Error ${pricesResponse.code()}"))
+            }
+        }
+        catch (exception : Exception){
+            Result.failure(exception)
+        }
+    }
+}
