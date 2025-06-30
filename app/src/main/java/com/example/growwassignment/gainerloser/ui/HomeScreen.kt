@@ -1,6 +1,8 @@
 package com.example.growwassignment.gainerloser.ui
 
+import android.app.Activity
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +46,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -62,13 +65,22 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen(marketViewModel: MarketViewModel, navController: NavHostController) {
 
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
 
+    val context = LocalContext.current
+    val activity = context as Activity
+
+    if(currentRoute == Screen.Home.route){
+        BackHandler(enabled = true) {
+            activity.finish()
+        }
+
+    }
     val uiState by marketViewModel.uiState.collectAsState()
-
-
     var isRefreshing by remember { mutableStateOf(false) }
-
     val refreshScope = rememberCoroutineScope()
+
 
     fun refresh(){
         refreshScope.launch {
@@ -181,9 +193,9 @@ fun StockItemBox(stock: StockItem, navController: NavHostController) {
     Card(
         modifier = Modifier
             .padding(4.dp),
-        elevation = CardDefaults.cardElevation(),
+        elevation = CardDefaults.cardElevation(4.dp),
         onClick = {
-            Log.d("TickerAndPrice","Home Screen Ticker is ${stock.ticker} price is ${stock.price}")
+            //Log.d("TickerAndPrice","Home Screen Ticker is ${stock.ticker} price is ${stock.price}")
             navController.navigate(Screen.StockDetails.createRoute(stock.ticker , stock.price.toDouble()))
         }
     ) {

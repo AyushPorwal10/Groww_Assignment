@@ -8,15 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.growwassignment.gainerloser.marketdatamodels.StockItem
 import com.example.growwassignment.gainerloser.marketdatamodels.StockSearchItem
 
-@Composable
-fun ShowStockGrid(stockItems : List<StockItem>, navController: NavHostController) {
-    val list = stockItems ?: emptyList()
 
-    val stockRow = list.chunked(2)
+@Composable
+fun ShowSearchedStockGrid(stockItems: List<StockSearchItem>) {
+
+    val stockRow = stockItems.chunked(2)
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -29,7 +27,7 @@ fun ShowStockGrid(stockItems : List<StockItem>, navController: NavHostController
             ) {
                 for (item in rowItems) {
                     Box(modifier = Modifier.weight(1f)) {
-                        SingleStockBox(item , navController)
+                        SingleSearchedItem(item)
                     }
                 }
                 if (rowItems.size < 2) {
@@ -39,5 +37,3 @@ fun ShowStockGrid(stockItems : List<StockItem>, navController: NavHostController
         }
     }
 }
-
-

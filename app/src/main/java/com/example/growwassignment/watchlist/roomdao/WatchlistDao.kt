@@ -1,12 +1,12 @@
-package com.example.growwassignment.roomdb.roomdao
+package com.example.growwassignment.watchlist.roomdao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.growwassignment.roomdb.roomentity.Watchlist
-import com.example.growwassignment.roomdb.roomentity.WatchlistItem
+import com.example.growwassignment.watchlist.roomentity.Watchlist
+import com.example.growwassignment.watchlist.roomentity.WatchlistItem
 import kotlinx.coroutines.flow.Flow
 
 

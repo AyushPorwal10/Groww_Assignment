@@ -3,8 +3,8 @@ package com.example.growwassignment.hilt
 import android.content.Context
 import androidx.room.Room
 import com.example.growwassignment.BuildConfig
-import com.example.growwassignment.roomdb.roomdatabase.AppRoomDatabase
-import com.example.growwassignment.roomdb.roomdao.WatchlistDao
+import com.example.growwassignment.watchlist.roomdatabase.AppRoomDatabase
+import com.example.growwassignment.watchlist.roomdao.WatchlistDao
 import com.example.growwassignment.gainerloser.apis.ApiKeyInterceptor
 import com.example.growwassignment.gainerloser.apis.StockMarketAPI
 import dagger.Module

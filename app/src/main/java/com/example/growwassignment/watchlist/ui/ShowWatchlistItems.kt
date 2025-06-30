@@ -1,5 +1,6 @@
-package com.example.growwassignment.roomdb.ui
+package com.example.growwassignment.watchlist.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,14 +33,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.growwassignment.R
 import com.example.growwassignment.appnavigation.mainactivitynavigation.Screen
 import com.example.growwassignment.gainerloser.uistate.ShowLoadingState
-import com.example.growwassignment.roomdb.roomentity.WatchlistItem
-import com.example.growwassignment.roomdb.uistate.WatchlistUiState
-import com.example.growwassignment.roomdb.roomviewmodel.WatchlistViewModel
+import com.example.growwassignment.watchlist.roomentity.WatchlistItem
+import com.example.growwassignment.watchlist.uistate.WatchlistUiState
+import com.example.growwassignment.watchlist.roomviewmodel.WatchlistViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,8 +53,11 @@ fun ShowWatchlistsItems(
 ) {
 
     LaunchedEffect(Unit) {
-        if(watchlistId != null)
-        watchlistViewModel.loadItemsFromWatchlist(watchlistId)
+        if (watchlistId != null)
+            watchlistViewModel.loadItemsFromWatchlist(watchlistId)
+        else {
+            Log.d("WATCHLIST","ShowWatchListItems WATCHLIST id is null ")
+        }
     }
 
     val watchlistItemUiState by watchlistViewModel.watchlistUiState.collectAsState()
@@ -68,10 +73,11 @@ fun ShowWatchlistsItems(
             }
 
         }
-    ){paddingValues->
+    ) { paddingValues ->
 
-        when(val state = watchlistItemUiState){
+        when (val state = watchlistItemUiState) {
             is WatchlistUiState.Success -> {
+                Log.d("WATCHLIST","Show watch list item success")
                 LazyColumn(
                     modifier = Modifier
                         .padding(paddingValues)
@@ -79,16 +85,36 @@ fun ShowWatchlistsItems(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    item(state.data){
-                        StockGrid(state.data , navHostController)
+                    item{
+                        StockGrid(state.data, navHostController)
                     }
                 }
             }
+
             is WatchlistUiState.Loading -> {
+                Log.d("WATCHLIST","Show watch list item loading")
                 ShowLoadingState()
             }
-            else -> {
 
+            is WatchlistUiState.Empty -> {
+                Log.d("WATCHLIST","Show watch list item empty")
+                Box(modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center) {
+                    Text(
+                        "No items found.",
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+
+            is WatchlistUiState.Idle -> {
+                Log.d("WATCHLIST","Show watch list item idle")
+                //
+            }
+
+            else -> {
+                Log.d("WATCHLIST","Show watch list item else part")
+                //
             }
         }
 
@@ -113,7 +139,7 @@ fun StockGrid(watchlistItem: List<WatchlistItem>, navHostController: NavHostCont
             ) {
                 for (item in rowItems) {
                     Box(modifier = Modifier.weight(1f)) {
-                        SingleWatchlistItem(item , navHostController)
+                        SingleWatchlistItem(item, navHostController)
                     }
                 }
                 if (rowItems.size < 2) {
@@ -129,9 +155,14 @@ fun SingleWatchlistItem(watchlistItem: WatchlistItem, navHostController: NavHost
     Card(
         modifier = Modifier
             .padding(4.dp),
-        elevation = CardDefaults.cardElevation(),
+        elevation = CardDefaults.cardElevation(4.dp),
         onClick = {
-            navHostController.navigate(Screen.StockDetails.createRoute(watchlistItem.ticker , watchlistItem.price))
+            navHostController.navigate(
+                Screen.StockDetails.createRoute(
+                    watchlistItem.ticker,
+                    watchlistItem.price
+                )
+            )
         }
     ) {
         Column(

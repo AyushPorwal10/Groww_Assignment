@@ -1,8 +1,8 @@
-package com.example.growwassignment.roomdb.roomrepository
+package com.example.growwassignment.watchlist.roomrepository
 
-import com.example.growwassignment.roomdb.roomentity.Watchlist
-import com.example.growwassignment.roomdb.roomdao.WatchlistDao
-import com.example.growwassignment.roomdb.roomentity.WatchlistItem
+import com.example.growwassignment.watchlist.roomentity.Watchlist
+import com.example.growwassignment.watchlist.roomdao.WatchlistDao
+import com.example.growwassignment.watchlist.roomentity.WatchlistItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -46,3 +46,16 @@ fun ShowUserThatNoDataAvailable() {
         Text("No data available\nAPI Limit Reached")
     }
 }
+
+@Composable
+fun ShowEmptyState() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+
+        Text(
+            text =  "No Search Result.",
+        )
+    }
+}

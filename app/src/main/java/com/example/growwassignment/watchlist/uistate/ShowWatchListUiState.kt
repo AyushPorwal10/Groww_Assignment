@@ -1,4 +1,4 @@
-package com.example.growwassignment.roomdb.uistate
+package com.example.growwassignment.watchlist.uistate
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

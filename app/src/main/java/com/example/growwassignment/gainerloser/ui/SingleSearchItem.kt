@@ -1,6 +1,5 @@
 package com.example.growwassignment.gainerloser.ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,25 +22,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.growwassignment.R
-import com.example.growwassignment.gainerloser.marketdatamodels.StockItem
-import com.example.growwassignment.appnavigation.mainactivitynavigation.Screen
+import com.example.growwassignment.gainerloser.marketdatamodels.StockSearchItem
+
 
 @Composable
-fun SingleStockBox(stockItem: StockItem ,  navController: NavHostController) {
+fun SingleSearchedItem(stockItem: StockSearchItem) {
     Card(
         modifier = Modifier
             .padding(4.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = {
-            Log.d("TickerAndPrice", "Home Screen Ticker is ${stockItem.ticker} price is ${stockItem.price}")
-            navController.navigate(
-                Screen.StockDetails.createRoute(
-                    stockItem.ticker,
-                    stockItem.price.toDouble()
-                )
-            )
+            // This is disable because if i try to navigate to company overview for a click stock item  ,
+            // Company overview need price field which is not available in this search endpoint
+            // that's why this click is disabled
         }
     ) {
         Column(
@@ -57,24 +51,20 @@ fun SingleStockBox(stockItem: StockItem ,  navController: NavHostController) {
                     .background(Color.LightGray)
             ) {
 
-                // if change Percent is < 0 that mean losers else gainers
-                val changePercent =
-                    stockItem.change_percentage.substringBefore("%").toDoubleOrNull() ?: 0.0
-                val iconRes =
-                    if (changePercent < 0) R.drawable.top_losers else R.drawable.top_gainers
+
                 Icon(
                     modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(iconRes),
+                    painter = painterResource(R.drawable.top_gainers),
                     contentDescription = null,
-                    tint = if (iconRes == R.drawable.top_gainers) Color.Green else Color.Red
+                    tint = Color.Gray
                 )
             }
 
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(text = stockItem.ticker, style = MaterialTheme.typography.bodyMedium)
-            Text(text = "$" + stockItem.price, style = MaterialTheme.typography.bodySmall)
+            Text(text = stockItem.name, style = MaterialTheme.typography.bodyMedium)
+            Text(text = "$" + stockItem.symbol, style = MaterialTheme.typography.bodySmall)
 
         }
     }

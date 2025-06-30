@@ -8,5 +8,4 @@ import com.example.growwassignment.gainerloser.marketdatamodels.CompanyOverviewD
                 data.Name.isNullOrBlank() &&
                 data.MarketCapitalization.isNullOrBlank()
     }
-
 }

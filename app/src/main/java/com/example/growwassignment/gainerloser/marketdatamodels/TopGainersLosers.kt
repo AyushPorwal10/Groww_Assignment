@@ -8,7 +8,7 @@ data class TopGainersLosers(
 )
 
 data class StockItem(
-    val ticker: String,
+    val ticker: String,      // company symbol
     val price: String,
     val change_percentage : String,
 )

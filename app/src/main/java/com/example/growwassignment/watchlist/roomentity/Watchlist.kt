@@ -1,4 +1,4 @@
-package com.example.growwassignment.roomdb.roomentity
+package com.example.growwassignment.watchlist.roomentity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

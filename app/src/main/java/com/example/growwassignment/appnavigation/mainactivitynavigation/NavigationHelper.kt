@@ -8,7 +8,7 @@ sealed class Screen(val route: String) {
     }
     object Home : Screen("home")
     object Watchlist : Screen("watchList")
-    object WatchlistItem : Screen("watchlistItems/{watchlistId}/{name}"){
+    object WatchlistItem : Screen("watchlistItems/{watchlistId}/{name}"){   // watchlist id to fetch watchlist items and name to show name of watchlist
         fun createRoute(watchlistId : Int, name : String ) = "watchlistItems/$watchlistId/$name"
     }
 

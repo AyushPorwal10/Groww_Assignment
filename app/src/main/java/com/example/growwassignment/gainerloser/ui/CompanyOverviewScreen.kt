@@ -22,6 +22,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -47,9 +49,8 @@ import com.example.growwassignment.gainerloser.uistate.ShowErrorState
 import com.example.growwassignment.gainerloser.uistate.ShowLoadingState
 import com.example.growwassignment.gainerloser.uistate.ShowUserThatNoDataAvailable
 import com.example.growwassignment.gainerloser.uistate.UiState
-import com.example.growwassignment.roomdb.uistate.ShowMessageToUser
-import com.example.growwassignment.roomdb.uistate.WatchlistUiState
-import com.example.growwassignment.roomdb.roomviewmodel.WatchlistViewModel
+import com.example.growwassignment.watchlist.uistate.WatchlistUiState
+import com.example.growwassignment.watchlist.roomviewmodel.WatchlistViewModel
 
 
 //@Preview(showBackground = true)
@@ -63,6 +64,8 @@ fun CompanyOverviewScreen(
     watchlistViewModel: WatchlistViewModel
 ) {
 
+
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val prices = topGainerLosersViewModel.priceData
 
@@ -88,6 +91,9 @@ fun CompanyOverviewScreen(
         }
     }
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
         topBar = {
             Column(modifier = Modifier.background(Color.White)) {
                 Row(
@@ -109,7 +115,7 @@ fun CompanyOverviewScreen(
                                     .clickable {
                                         // if already saved and again click than unsave it
                                         if(isCompanyStockSaved){
-                                            Log.d("WATCHLIST", "SYMBOL is Saved now unsaving it ")
+                                            Log.d("WATCHLIST", "SYMBOL ($companySymbol) is Saved now unsaving it ")
                                             companySymbol?.let {
                                                 watchlistViewModel.unsaveWatchlistItem(companySymbol)
                                             }
@@ -134,18 +140,20 @@ fun CompanyOverviewScreen(
     ) { paddingValues ->
 
         if (showBottomSheet) {
+
+
             WatchlistBottomSheet(
                 showSheet = true,
                 onDismissRequest = { showBottomSheet = false },
-                watchlists = watchlistViewModel.allWatchlist.collectAsState(emptyList()).value,
+                watchlists = watchlistViewModel.showAllWatchlist.collectAsState(emptyList()).value, // showing all watchlist in bottom sheet pop up
                 onAddNewWatchlist = { name ->
-                    watchlistViewModel.addWatchlist(name)
+                    watchlistViewModel.addWatchlist(name)  // when user add new watchlist
                 },
                 onWatchlistSelected = { selected ->
                     watchlistViewModel.addItemToWatchlist(
                         ticker = companySymbol ?: "",
                         price = companyPrice ?: 0.0,
-                        watchlistId = selected.id
+                        watchlistId = selected.id       // this will be used to identify which watchlist user selected to add item
                     )
                 }
             )
@@ -187,18 +195,27 @@ fun CompanyOverviewScreen(
         }
 
 
-        when(val state = watchlistUiState){
-            is WatchlistUiState.SuccessMessage -> {
-                ShowMessageToUser(state.successMessage)
+        LaunchedEffect(watchlistUiState) {
+            when(val state = watchlistUiState){
+                is WatchlistUiState.SuccessMessage -> {
+                    snackbarHostState.showSnackbar(
+                        message =  state.successMessage,
+                        actionLabel = "Ok")
+                    watchlistViewModel.clearUiState()
+                }
+                is WatchlistUiState.Error -> {
+                    snackbarHostState.showSnackbar(
+                        message = state.errorMessage ,
+                        actionLabel = "Ok")
+                    watchlistViewModel.clearUiState()
+                }
+                else -> {
+
+                   // Log.d("WATCHLIST", "Else part should be shown")
+                }
             }
-            is WatchlistUiState.Error -> {
-                ShowMessageToUser(state.errorMessage)
-            }
-            is WatchlistUiState.Loading -> {
-                ShowLoadingState()
-            }
-            else -> {}
         }
+
     }
 }
 
@@ -261,6 +278,7 @@ fun CompanyNameAndLogo(
                     fontWeight = FontWeight.SemiBold
                 )
 
+                // No such field that shows % increase
 //                Text(
 //                    text = "+1.25%",
 //                    color = Color.Green,

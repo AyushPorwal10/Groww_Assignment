@@ -2,6 +2,7 @@ package com.example.growwassignment.gainerloser.marketrepo
 
 import com.example.growwassignment.gainerloser.marketdatamodels.CompanyOverviewData
 import com.example.growwassignment.gainerloser.apis.StockMarketAPI
+import com.example.growwassignment.gainerloser.marketdatamodels.StockSearchResponse
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -32,4 +33,10 @@ class MarketRepository @Inject constructor(
             Result.failure(exception)
         }
     }
+
+    suspend fun getStocksItemsByKeyword(searchKeyword : String) : StockSearchResponse{
+        return marketAPI.getStocksItemsByKeyword(keywords = searchKeyword)
+    }
+
+
 }
