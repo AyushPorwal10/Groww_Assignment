@@ -91,13 +91,13 @@ This project is built using the following technologies:
 - **Jetpack ViewModel & StateFlow** – For lifecycle-aware state management   
 
 
+---
+
+**Download Apk File**
+Drive Link - https://drive.google.com/file/d/1mTSvNwEBXWJzzsya0lv_hnJZBXt5ihg5/view?usp=drive_link
+
 
   ## API Key & Base URL Configuration
-
-**Note:**  
-If you're cloning or downloading this repository to run the project locally, you **must provide your own API key and base URL**.
-
-Create a file named `secret.properties` in the **root directory** of the project with the following structure:
 
 ##  Cloning & Setup
 
@@ -106,12 +106,12 @@ Create a file named `secret.properties` in the **root directory** of the project
    git clone https://github.com/AyushPorwal10/Groww_Assignment
   
 
+**Note:**  
+If you're cloning or downloading this repository to run the project locally, you **must provide your own API key and base URL**.
+
+Create a file named `secret.properties` in the **root directory** of the project with the following structure:
 
    
 ```properties
 ALPHA_VANTAGE_API_KEY=your_api_key_here
 ALPHA_VANTAGE_BASE_URL=https://www.alphavantage.co
-
-
-
-
