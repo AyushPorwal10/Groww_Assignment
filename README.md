@@ -89,7 +89,7 @@ This project is built using the following technologies:
 - **Jetpack Compose** – Modern declarative UI toolkit for Android  
 - **Kotlin Coroutines & Flow** – For asynchronous and reactive programming  
 - **Jetpack ViewModel & StateFlow** – For lifecycle-aware state management   
-
+- **MVVM Architecture** – Separates concerns across Model, View, and ViewModel for better code organization and lifecycle-aware data handling.
 
 ---
 
