@@ -1,4 +1,6 @@
-package com.example.growwassignment.gainerloser.marketdata
+package com.example.growwassignment.gainerloser.marketdatamodels
+
+import com.google.gson.annotations.SerializedName
 
 data class CompanyOverviewData(
     val Symbol: String?,
@@ -46,8 +48,13 @@ data class CompanyOverviewData(
     val EVToRevenue: String?,
     val EVToEBITDA: String?,
     val Beta: String?,
-    val `52WeekHigh`: String?,
-    val `52WeekLow`: String?,
+
+    @SerializedName("52WeekHigh")
+    val weekHigh52: String?,
+
+    @SerializedName("52WeekLow")
+    val weekLow52: String?,
+
     val `50DayMovingAverage`: String?,
     val `200DayMovingAverage`: String?,
     val SharesOutstanding: String?,

@@ -1,4 +1,4 @@
-package com.example.growwassignment.helper
+package com.example.growwassignment.gainerloser.apis
 
 import okhttp3.Interceptor
 import okhttp3.Response

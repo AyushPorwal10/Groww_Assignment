@@ -1,3 +1,6 @@
+
+
+import java.util.Properties
 plugins {
     id("kotlin-kapt")
     alias(libs.plugins.dagger.hilt)
@@ -6,6 +9,15 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+val localProperties = Properties()
+val localPropertiesFile = File(rootDir , "secret.properties")
+
+if(localPropertiesFile.exists() && localPropertiesFile.isFile){
+    localPropertiesFile.inputStream().use {
+        localProperties.load(it)
+
+    }
+}
 android {
     namespace = "com.example.growwassignment"
     compileSdk = 36
@@ -18,7 +30,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
+
 
     buildTypes {
         release {
@@ -27,6 +41,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String","ALPHA_VANTAGE_API_KEY","\"${localProperties.getProperty("ALPHA_VANTAGE_API_KEY")}\"")
+            buildConfigField("String","ALPHA_VANTAGE_BASE_URL","\"${localProperties.getProperty("ALPHA_VANTAGE_BASE_URL")}\"")
+
+        }
+        debug {
+            buildConfigField("String","ALPHA_VANTAGE_API_KEY","\"${localProperties.getProperty("ALPHA_VANTAGE_API_KEY")}\"")
+            buildConfigField("String","ALPHA_VANTAGE_BASE_URL","\"${localProperties.getProperty("ALPHA_VANTAGE_BASE_URL")}\"")
         }
     }
     compileOptions {
@@ -38,6 +59,8 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+        resValues = true
     }
 }
 
@@ -69,7 +92,7 @@ dependencies {
     // Paging
     implementation(libs.pagingLibrary)
 
-    //okhttps
+    //okhttp
 
     implementation(libs.okhttpLibrary)
     implementation(libs.okhttpInterceptorLibrary)
@@ -78,7 +101,13 @@ dependencies {
 
     // line graph MpAndroidChart
     implementation(libs.mpAndroidChart)
-    
+
+    // for flow layout
+    implementation(libs.accompanistLibrary)
+
+    implementation(libs.roomDB)
+    kapt(libs.roomKapt)
+
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)

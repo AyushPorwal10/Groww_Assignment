@@ -1,4 +1,4 @@
-package com.example.growwassignment.gainerloser.marketdata
+package com.example.growwassignment.gainerloser.marketdatamodels
 
 import com.google.gson.annotations.SerializedName
 

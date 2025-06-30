@@ -1,9 +1,7 @@
 package com.example.growwassignment.gainerloser.marketrepo
 
-import android.util.Log
-import com.example.growwassignment.gainerloser.marketdata.CompanyOverviewData
-import com.example.growwassignment.retrofit.StockMarketAPI
-import kotlinx.coroutines.flow.Flow
+import com.example.growwassignment.gainerloser.marketdatamodels.CompanyOverviewData
+import com.example.growwassignment.gainerloser.apis.StockMarketAPI
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -23,7 +21,7 @@ class MarketRepository @Inject constructor(
                 val body = pricesResponse.body()
                 val list = body?.timeSeries?.entries?.map {
                     it.key to it.value.close.toFloat()
-                }?.sortedBy { it.first } ?: emptyList()
+                } ?: emptyList()
                 Result.success(list)
             }
             else {

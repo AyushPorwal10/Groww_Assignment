@@ -20,8 +20,8 @@ swipeRefresh = "0.24.13-rc"
 okhttp = "4.10.0"
 okhttpInterceptor= "4.9.3"
 androidChart = "v3.1.0"
-
-
+accompanist = "0.34.0"
+room = "2.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +42,10 @@ compose-navigation = {group = "androidx.navigation", name = "navigation-compose"
 pagingLibrary = {group = "androidx.paging",name = "paging-compose" , version.ref = "paging"}
 swipeRefreshLibrary = {group = "com.google.accompanist" , name = "accompanist-swiperefresh" , version.ref = "swipeRefresh"}
 
+roomDB = {group = "androidx.room" ,name = "room-runtime" ,version.ref = "room"}
+roomKapt = {group = "androidx.room", name = "room-compiler" , version.ref = "room"}
+
+accompanistLibrary = {group = "com.google.accompanist",name = "accompanist-flowlayout",  version.ref = "accompanist"}
 okhttpLibrary = {group = "com.squareup.okhttp3",name = "okhttp" , version.ref = "okhttp"}
 okhttpInterceptorLibrary = {group = "com.squareup.okhttp3" , name = "logging-interceptor", version.ref = "okhttpInterceptor"}
 

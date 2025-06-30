@@ -1,6 +1,6 @@
 package com.example.growwassignment.gainerloser.ui
 
-import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,80 +33,129 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
-import com.example.growwassignment.gainerloser.activity.ViewAllTopGainersAndLosers
-import com.example.growwassignment.gainerloser.marketdata.StockItem
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.growwassignment.gainerloser.marketdatamodels.StockItem
 import com.example.growwassignment.gainerloser.marketviewmodels.MarketViewModel
-import com.example.growwassignment.helper.HomeRoutes
-import com.example.growwassignment.helper.Screen
+import com.example.growwassignment.appnavigation.mainactivitynavigation.Screen
+import com.example.growwassignment.gainerloser.uistate.ShowErrorState
+import com.example.growwassignment.gainerloser.uistate.ShowLoadingState
+import com.example.growwassignment.gainerloser.uistate.ShowUserThatNoDataAvailable
+import com.example.growwassignment.gainerloser.uistate.UiState
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(marketViewModel: MarketViewModel, navController: NavHostController) {
 
-    val topGainersLosersInitialData =
-        marketViewModel.topMarketGainersLosersData.collectAsState()
 
-    val context = LocalContext.current
+    val uiState by marketViewModel.uiState.collectAsState()
+
+
+    var isRefreshing by remember { mutableStateOf(false) }
+
+    val refreshScope = rememberCoroutineScope()
+
+    fun refresh(){
+        refreshScope.launch {
+            isRefreshing = true
+            marketViewModel.loadTopMarket()
+            isRefreshing = false
+        }
+    }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                Text(text = stringResource(R.string.stocks_app))
-            })
+            Column {
+                    TopAppBar(title = {
+                        Text(text = stringResource(R.string.stocks_app))
+                    },
+                        actions = {
+                            IconButton(onClick = {
+                                navController.navigate(Screen.SearchTicker.route)
+                            }) {
+                                Icon(imageVector = Icons.Default.Search , contentDescription = null)
+                            }
+                        })
+                HorizontalDivider(thickness = 1.dp)
+            }
+
         },
         bottomBar = {
             BottomNavigationBar(navController)
         }
     ) { paddingValues ->
 
-        LazyColumn(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+        SwipeRefresh(
+            state = SwipeRefreshState(isRefreshing),
+            onRefresh = {refresh()},
+            modifier = Modifier.padding(paddingValues)
         ) {
-            item {
-                Section(title = stringResource(R.string.top_gainers)) {
-                    val navigateToShowAllTopGainer = Intent(context , ViewAllTopGainersAndLosers::class.java)
-                    // this information is used to make decisions which stock to show either losers or gainers
 
-                    navigateToShowAllTopGainer.putExtra("gainers_losers", Screen.TopGainers.route)
-                    context.startActivity(navigateToShowAllTopGainer)
+            when(uiState){
+                is UiState.Loading -> {
+                   ShowLoadingState()
+                }
+                is UiState.Error -> {
+                    val errorMessage = (uiState as UiState.Error).errorMessage
+                    ShowErrorState(errorMessage)
+                }
+
+                is UiState.Empty -> {
+                   ShowUserThatNoDataAvailable()
+                }
+                is UiState.Success -> {
+                    val data = (uiState as UiState.Success).data
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        item {
+                            Section(title = stringResource(R.string.top_gainers)) {
+                                navController.navigate(Screen.TopGainers.route)
+                            }
+                        }
+
+                        item {
+                            StockGrid(data.top_gainers, navController)
+                        }
+
+                        item {
+                            Section(title = stringResource(R.string.top_losers)) {
+                                navController.navigate(Screen.TopLosers.route)
+                            }
+                        }
+
+                        item {
+                            StockGrid(data.top_losers, navController)
+                        }
+                    }
                 }
             }
 
-            item {
-                StockGrid(topGainersLosersInitialData.value?.top_gainers)
-            }
-
-            item {
-                Section(title = stringResource(R.string.top_losers)) {
-                    val navigateToShowAllTopGainer = Intent(context , ViewAllTopGainersAndLosers::class.java)
-                    // this information is used to make decisions which stock to show either losers or gainers
-
-                    navigateToShowAllTopGainer.putExtra("gainers_losers",Screen.TopLosers.route)
-
-                    context.startActivity(navigateToShowAllTopGainer)
-                }
-            }
-
-            item {
-                StockGrid(topGainersLosersInitialData.value?.top_losers)
-            }
         }
+
     }
 }
 
 
 @Composable
-fun StockGrid(gainers: List<StockItem>?) {
+fun StockGrid(gainers: List<StockItem>? , navController: NavHostController) {
 
     val firstFourData = gainers?.take(4) ?: emptyList()
 
@@ -121,27 +170,28 @@ fun StockGrid(gainers: List<StockItem>?) {
     ) {
         items(firstFourData.size) { index ->
             val stock = firstFourData[index]
-            StockItemBox(stock)
+            StockItemBox(stock , navController)
         }
     }
 }
 
 
 @Composable
-fun StockItemBox(stock: StockItem) {
+fun StockItemBox(stock: StockItem, navController: NavHostController) {
     Card(
         modifier = Modifier
             .padding(4.dp),
         elevation = CardDefaults.cardElevation(),
         onClick = {
-
+            Log.d("TickerAndPrice","Home Screen Ticker is ${stock.ticker} price is ${stock.price}")
+            navController.navigate(Screen.StockDetails.createRoute(stock.ticker , stock.price.toDouble()))
         }
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             Box(
                 modifier = Modifier
@@ -150,7 +200,7 @@ fun StockItemBox(stock: StockItem) {
                     .background(Color.LightGray)
             ) {
 
-                // if change Percent is < 0 that mean losers are there
+                // if change Percent is < 0 that mean losers else gainers
                 val changePercent = stock.change_percentage.substringBefore("%").toDoubleOrNull() ?: 0.0
                 val iconRes = if (changePercent < 0) R.drawable.top_losers else R.drawable.top_gainers
                 Icon(
@@ -193,11 +243,14 @@ fun Section(title: String, onViewAllClick: () -> Unit) {
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = currentBackStackEntry?.destination
     NavigationBar {
         NavigationBarItem(
-            selected = true,
+            selected = currentDestination?.route == Screen.Home.route,
             onClick = {
-                navController.navigate(HomeRoutes.Home.route){
+                navController.navigate(Screen.Home.route){
                     launchSingleTop = true
                 }
             },
@@ -209,9 +262,9 @@ fun BottomNavigationBar(navController: NavHostController) {
             }
         )
         NavigationBarItem(
-            selected = true,
+            selected = currentDestination?.route == Screen.Watchlist.route,
             onClick = {
-                navController.navigate(HomeRoutes.WatchList.route){
+                navController.navigate(Screen.Watchlist.route){
                     launchSingleTop = true
                 }
             },

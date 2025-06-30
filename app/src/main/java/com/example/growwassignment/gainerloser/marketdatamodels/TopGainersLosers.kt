@@ -1,4 +1,4 @@
-package com.example.growwassignment.gainerloser.marketdata
+package com.example.growwassignment.gainerloser.marketdatamodels
 
 
 data class TopGainersLosers(

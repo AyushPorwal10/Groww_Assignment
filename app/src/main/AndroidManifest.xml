@@ -14,10 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GrowwAssignment">
-        <activity
-            android:name=".gainerloser.activity.ViewAllTopGainersAndLosers"
-            android:exported="false"
-            android:theme="@style/Theme.GrowwAssignment" />
+
         <activity
             android:name=".gainerloser.activity.MainActivity"
             android:exported="true"

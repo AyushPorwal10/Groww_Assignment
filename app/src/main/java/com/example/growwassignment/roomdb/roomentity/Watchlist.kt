@@ -1,4 +1,4 @@
-package com.example.growwassignment.gainerloser.roomdb
+package com.example.growwassignment.roomdb.roomentity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -21,7 +21,7 @@ data class Watchlist(
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("watchlistId")]
+    indices = [Index(value = ["watchlistId", "ticker"], unique = true)]
 )
 data class WatchlistItem(
     @PrimaryKey(autoGenerate = true)val id : Int = 0,
