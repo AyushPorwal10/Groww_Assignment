@@ -1,10 +1,10 @@
-# 📱 Stocks App
+# Stocks App
 
 **Stocks App** is a modern Android application that helps users stay updated with the stock market. Users can view top gainers and losers, explore detailed company overviews, and manage personalized watchlists.
 The app allows saving stocks to watchlists, which are accessible even offline, providing a smooth and reliable experience for market enthusiasts.
 ---
 
-## 🚀 Features
+## Features
 
 ## Home Screen
 Users can view Top Gainers and Top Losers with limited items on the home screen.
@@ -26,61 +26,92 @@ Watchlists are persisted locally, allowing users to access their saved stocks of
 
 ---
 
-## 📱 Screenshots
+##  Screenshots
 <table>
 
    <tr>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/roles.png" alt="Find Talent" width="200"/>
-      <h2>Find Talent</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/home_screen.png" alt="Home Screen" width="200"/>
+      <h2>Home Screen</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/vacancy.png" alt="Find teams to join" width="200"/>
-      <h2>Find teams to join</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/top_20_gainers.png" alt="Top 20 Gainers" width="200"/>
+      <h2>Top 20 Gainers</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/projects.png" alt="Discover projects" width="200"/>
-      <h2>Discover projects</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/top_20_losers.png" alt="Top 20 Losers" width="200"/>
+      <h2>Top 20 Losers</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/profile.png" alt="Manage Profile" width="200"/>
-      <h2>Manage Profile</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/company_overview_.png" alt="Company Overview" width="200"/>
+      <h2>Company Overview</h2>
     </td>
   </tr>
   
   <tr>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/notifications.png" alt="Notifications" width="200"/>
-      <h2>Join and make team</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/company_overview.png" alt="Company Overview" width="200"/>
+      <h2>Company Overview</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/request_notifications.png" alt="Request_Notifications" width="200"/>
-      <h2>Get Notified</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/add_item_to_new_or_existing_watchlist.png" alt="Manage Watchlists" width="200"/>
+      <h2>Manage Watchlists</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/CT_Play_Store_SS/blob/main/chat.png" alt="Collaborate" width="200"/>
-      <h2>Collaborate</h2>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/view_created_watchlist.png" alt="Created Watchlists" width="200"/>
+      <h2>Created Watchlists</h2>
     </td>
+    <td>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/search.png" alt="Search Stocks" width="200"/>
+      <h2>Search Stocks</h2>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/watchlist_items.png" alt="Watchlist Items" width="200"/>
+      <h2>Watchlist Items</h2>
+    </td>
+    
   </tr>
   
 </table>
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
-- Android (Kotlin)
+This project is built using the following technologies:
+
+- **Kotlin** – Primary language for Android development  
+- **Hilt (Dagger-Hilt)** – For dependency injection  
+- **Retrofit** – For handling network/API requests  
+- **Jetpack Compose** – Modern declarative UI toolkit for Android  
+- **Kotlin Coroutines & Flow** – For asynchronous and reactive programming  
+- **Jetpack ViewModel & StateFlow** – For lifecycle-aware state management   
 
 
-  ## 🔐 API Key & Base URL Configuration
+
+  ## API Key & Base URL Configuration
 
 **Note:**  
 If you're cloning or downloading this repository to run the project locally, you **must provide your own API key and base URL**.
 
 Create a file named `secret.properties` in the **root directory** of the project with the following structure:
 
+##  Cloning & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/AyushPorwal10/Groww_Assignment
+  
+
+
+   
 ```properties
 ALPHA_VANTAGE_API_KEY=your_api_key_here
 ALPHA_VANTAGE_BASE_URL=https://www.alphavantage.co
+
+
 
 
