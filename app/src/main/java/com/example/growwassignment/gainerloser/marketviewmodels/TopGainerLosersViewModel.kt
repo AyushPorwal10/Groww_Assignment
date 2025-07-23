@@ -107,7 +107,9 @@ class TopGainerLosersViewModel @Inject constructor(
             _companyOverviewUiState.value = UiState.Loading
 
             try {
-                val response = marketRepository.fetchCompanyOverview(companySymbol)
+               val response = withContext(Dispatchers.IO) {
+                marketRepository.fetchCompanyOverview(companySymbol)
+            }
                 if (response.isSuccessful) {
                     Log.d(LOG_TAG, "Response is success")
 
@@ -134,7 +136,9 @@ class TopGainerLosersViewModel @Inject constructor(
     /* fetching data points to be plot on line graph . (Fetching with full parameter to get enough data points instead of 100 data points) */
     fun loadPricesGraph(companySymbol: String) {
         viewModelScope.launch {
-            val result = marketRepository.getIntradayPrices(companySymbol)
+            val result = withContext(Dispatchers.IO) {
+            marketRepository.getIntradayPrices(companySymbol)
+        }
             result.onSuccess { rawList ->
                 val sortedList = rawList.sortedBy {
                     it.first
