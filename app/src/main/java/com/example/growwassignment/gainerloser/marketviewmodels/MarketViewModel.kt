@@ -92,7 +92,9 @@ class MarketViewModel @Inject constructor(
 
         searchQueryUiState.value = StockSearchUiState.Loading
         try {
-            val result = marketRepository.getStocksItemsByKeyword(query)
+            val result = withContext(Dispatchers.IO) {
+            marketRepository.getStocksItemsByKeyword(query)
+      }
             searchQueryUiState.value = StockSearchUiState.Success(result.bestMatches)
         } catch (e: Exception) {
             searchQueryUiState.value = StockSearchUiState.Error(e.localizedMessage ?: "Unknown error")
@@ -117,7 +119,9 @@ class MarketViewModel @Inject constructor(
 
             try{
                 Log.d(LOG_TAG , "Making api call in $LOG_TAG")
-                val response = marketRepository.fetchTopGainersLosers()
+                 val response = withContext(Dispatchers.IO) {
+                  marketRepository.fetchTopGainersLosers()
+               }
 
                 if (response.top_gainers.isNullOrEmpty() && response.top_losers.isNullOrEmpty()) {
                     _uiState.value = UiState.Empty
