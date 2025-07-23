@@ -42,7 +42,7 @@ class MarketViewModel @Inject constructor(
     /* This is used to keep track of last api call , if last api call was older than 5 min , new call can be done  */
     private var lastFetchTime : Long = 0L
     // caching 5 min
-    private val apiResponseCacheDuration = 5*50 * 1000L
+    private val apiResponseCacheDuration = 5*60 * 1000L
 
     private var fullMarketData: TopGainersLosers? = null
 
