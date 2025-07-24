@@ -55,7 +55,7 @@ fun StockPriceRange(
             ) {
                 Box(
                     modifier = Modifier
-                        .offset(x = offset - 40.dp) // adjust to center arrow
+                        .offset(x = offset - 40.dp) // need adjust to center arrow
                         .align(Alignment.TopStart)
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
