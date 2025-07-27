@@ -31,45 +31,45 @@ Watchlists are persisted locally, allowing users to access their saved stocks of
 
    <tr>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/home_screen.png" alt="Home Screen" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/home_screen.png" alt="Home Screen" width="200"/>
       <h2>Home Screen</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/top_20_gainers.png" alt="Top 20 Gainers" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/top_20_gainers.png" alt="Top 20 Gainers" width="200"/>
       <h2>Top 20 Gainers</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/top_20_losers.png" alt="Top 20 Losers" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/top_20_losers.png" alt="Top 20 Losers" width="200"/>
       <h2>Top 20 Losers</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/company_overview_.png" alt="Company Overview" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/company_overview_.png" alt="Company Overview" width="200"/>
       <h2>Company Overview</h2>
     </td>
   </tr>
   
   <tr>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/company_overview.png" alt="Company Overview" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/company_overview.png" alt="Company Overview" width="200"/>
       <h2>Company Overview</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/add_item_to_new_or_existing_watchlist.png" alt="Manage Watchlists" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/add_item_to_new_or_existing_watchlist.png" alt="Manage Watchlists" width="200"/>
       <h2>Manage Watchlists</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/view_created_watchlist.png" alt="Created Watchlists" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/view_created_watchlist.png" alt="Created Watchlists" width="200"/>
       <h2>Created Watchlists</h2>
     </td>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/search.png" alt="Search Stocks" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/search.png" alt="Search Stocks" width="200"/>
       <h2>Search Stocks</h2>
     </td>
   </tr>
 
   <tr>
     <td>
-      <img src="https://github.com/AyushPorwal10/Stocks_App_Screenshot/blob/main/watchlist_items.png" alt="Watchlist Items" width="200"/>
+      <img src="https://github.com/AyushPorwal10/README_SCREENSHOTS/blob/main/watchlist_items.png" alt="Watchlist Items" width="200"/>
       <h2>Watchlist Items</h2>
     </td>
     
